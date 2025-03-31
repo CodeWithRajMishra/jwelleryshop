@@ -1,0 +1,35 @@
+
+#adminheader
+{
+    width: 100%;
+    background-color: lightskyblue;
+    text-align: center;
+    height: 100px;
+    padding-top: 20px;
+}
+
+#adminname
+{
+    text-align: right;
+    padding-right: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: rgb(238, 238, 238);
+    color: navy;
+    font-weight: bold;
+}
+
+#adminArea
+{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+#leftmenu
+{
+    width: 20%;
+}
+#rightdata
+{
+    width: 80%;
+}
