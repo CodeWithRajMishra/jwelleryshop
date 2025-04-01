@@ -3,6 +3,9 @@ import Layout from "./Layout";
 import Home from "./pages/Home";
 import AdminDashBoard from "./admin/AdminDashBoard";
 import AddProduct from "./admin/AddProduct";
+import CartData from "./pages/CartData";
+import CheckOut from "./pages/CheckOut";
+import Registration from "./pages/Registration";
 
 const App=()=>{
   return(
@@ -11,7 +14,9 @@ const App=()=>{
         <Routes>
           <Route path="/" element={<Layout/>}>
             <Route index element={<Home/>}/>
-          
+            <Route path="cartdata" element={<CartData/>}/>
+            <Route path="checkout" element={<CheckOut/>}/>
+            <Route path="registration" element={<Registration/>}/>
           </Route>
         </Routes>
         <Routes>

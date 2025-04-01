@@ -18,9 +18,12 @@ const Header=()=>{
    const [adminid, setAdminid]= useState("");
    const [password, setPassword]= useState("");
    const [show, setShow] = useState(false);
+   const [show1, setShow1] = useState(false);
    const [messageApi, contextHolder] = message.useMessage();
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const handleClose1 = () => setShow1(false);
+    const handleShow1 = () => setShow1(true);
    const navigate= useNavigate();
    const Product= useSelector(state=>state.mycart.cart);
    const ProLength= Product.length;
@@ -52,9 +55,10 @@ const Header=()=>{
             <div id="topicons">
             <FaSearch />
          <FaHeart />
-         <FaUser />
-         <span> <FaShoppingCart /> {ProLength} </span>
-         
+         <FaUser onClick={handleShow1} />
+        <a href='#' onClick={()=>{navigate("cartdata")}}>
+         <span> <FaShoppingCart  /> {ProLength} </span>
+         </a>
 
          <RiAdminFill  onClick={handleShow} className='linkicon' />
          
@@ -83,6 +87,37 @@ const Header=()=>{
         value={password} onChange={(e)=>{setPassword(e.target.value)}} />
       </Form.Group>
       <Button variant="primary" type="submit" onClick={handleSubmit}>
+       Login
+      </Button>
+    </Form>
+
+
+        </Modal.Body>
+        <Modal.Footer>
+        </Modal.Footer>
+      </Modal>
+
+
+
+      <Modal show={show1} onHide={handleClose1}>
+        <Modal.Header closeButton>
+          <Modal.Title>User Login</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+
+        <Form>
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Label>Enter Id</Form.Label>
+        <Form.Control type="text" placeholder="Enter Admin ID"
+         />
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Label>Enter Password</Form.Label>
+        <Form.Control type="password" placeholder="Password"
+         />
+      </Form.Group>
+      <Button variant="primary" type="submit">
        Login
       </Button>
     </Form>
