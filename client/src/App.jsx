@@ -14,6 +14,7 @@ const App=()=>{
         <Routes>
           <Route path="/" element={<Layout/>}>
             <Route index element={<Home/>}/>
+            <Route path="home" element={<Home/>}/>
             <Route path="cartdata" element={<CartData/>}/>
             <Route path="checkout" element={<CheckOut/>}/>
             <Route path="registration" element={<Registration/>}/>

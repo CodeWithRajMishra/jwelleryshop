@@ -1,15 +1,39 @@
 import bgimg from "../images/slider-bg.jpg";
 import Button from 'react-bootstrap/Button';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Base_URL from "../config/BaseUrl";
 import Card from 'react-bootstrap/Card';
 import { addtoCart } from "../cartSlice";
 import { useDispatch } from "react-redux";
-
+import { MyContext } from "../LoginContext";
 const Home=()=>{
   const [mydata, setMydata]= useState([]);
   const dispatch= useDispatch();
+  const {logedIn, setUname, setUemail} = useContext(MyContext);
+
+
+   const customerAunthenticate=async()=>{
+
+    const token=localStorage.getItem("token");
+     if (token)
+     {
+         let api=`${Base_URL}customer/userauthenticate`;
+
+         const response =await axios.get(api, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+
+        console.log(response.data);
+        localStorage.setItem("username", response.data.name);
+        localStorage.setItem("useremail", response.data.email);
+        localStorage.setItem("userid", response.data._id);
+        setUname(localStorage.getItem("username"));
+        setUemail(localStorage.getItem("useremail"));
+     }
+   }
+
+
 
 
   const loadData=async()=>{
@@ -25,7 +49,12 @@ const Home=()=>{
 
   useEffect(()=>{
     loadData();
+    customerAunthenticate();
   }, [])
+
+  useEffect(()=>{
+    customerAunthenticate();
+  }, [logedIn])
 
 
   const ans=mydata.map((key)=>{

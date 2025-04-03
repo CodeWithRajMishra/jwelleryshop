@@ -5,8 +5,11 @@ import "./css/style.css";
 import "./css/admin.css";
 import store from './store.jsx';
 import {Provider} from "react-redux";
+import LoginContext from './LoginContext.jsx';
 createRoot(document.getElementById('root')).render(
     <Provider store={store}>
-       <App />
+        <LoginContext>
+        <App />
+        </LoginContext>
     </Provider>
 )

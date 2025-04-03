@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { RiAdminFill } from "react-icons/ri";
@@ -13,13 +13,21 @@ import axios from "axios";
 import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
+import Dropdown from 'react-bootstrap/Dropdown';
+import { MyContext } from '../LoginContext';
 const Header=()=>{
    const [adminid, setAdminid]= useState("");
    const [password, setPassword]= useState("");
    const [show, setShow] = useState(false);
    const [show1, setShow1] = useState(false);
    const [messageApi, contextHolder] = message.useMessage();
+    
+   const {logedIn, setLogedIn, uname, uemail, setUname, setUemail} = useContext(MyContext);
+
+
+   const [cusEmail, setCusEmail]= useState("");
+   const [cusPassword, setCusPassword] = useState("");
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleClose1 = () => setShow1(false);
@@ -45,6 +53,31 @@ const Header=()=>{
      }
     }
 
+const customerLoginSubmit=async(e)=>{
+  e.preventDefault();
+  let api=`${Base_URL}customer/customerlogin`;
+  try {
+       const response = await axios.post(api, {email:cusEmail, password:cusPassword});
+       console.log(response.data);
+       localStorage.setItem("token", response.data.token);
+       setShow1(false);
+       setLogedIn(true)
+       navigate("/");
+  } catch (error) {
+     alert(error.response.data.msg);
+  }
+
+}
+
+
+
+const logout=()=>{
+   localStorage.clear();
+   setUname("")
+   setUemail("");
+   setLogedIn(false);
+   navigate("/");  
+}
 
     return(
         <>
@@ -62,6 +95,25 @@ const Header=()=>{
 
          <RiAdminFill  onClick={handleShow} className='linkicon' />
          
+        
+         <Dropdown>
+      <Dropdown.Toggle variant="success" id="dropdown-basic">
+       user description
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        <Dropdown.Item href="#/action-1">
+         Welcome : {uname}
+        </Dropdown.Item>
+        <Dropdown.Item href="#/action-2">
+        Email : {uemail}
+        </Dropdown.Item>
+        <Dropdown.Item href="#/action-3" onClick={logout}>logout</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+
+
+
             </div>
          
          
@@ -107,17 +159,15 @@ const Header=()=>{
 
         <Form>
       <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Enter Id</Form.Label>
-        <Form.Control type="text" placeholder="Enter Admin ID"
-         />
+        <Form.Label>Enter Email</Form.Label>
+        <Form.Control type="email" value={cusEmail} onChange={(e)=>{setCusEmail(e.target.value)}}  />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Enter Password</Form.Label>
-        <Form.Control type="password" placeholder="Password"
-         />
+        <Form.Control type="password" value={cusPassword} onChange={(e)=>{setCusPassword(e.target.value)}}    />
       </Form.Group>
-      <Button variant="primary" type="submit">
+      <Button variant="primary" type="submit" onClick={customerLoginSubmit}>
        Login
       </Button>
     </Form>
