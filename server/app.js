@@ -7,6 +7,8 @@ var cors = require('cors')
 const path = require('path')
 const adminRoute= require("./routes/adminRoute");
 const customerRoute= require("./routes/customerRoute");
+const paymentRoute = require("./routes/payment");
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded())
 // parse application/json
@@ -19,6 +21,8 @@ mongoose.connect(process.env.DBCON).then(()=>{
 
 app.use("/admin", adminRoute);
 app.use("/customer", customerRoute);
+//Routing
+app.use("/api/payment/",paymentRoute);
 
 
 

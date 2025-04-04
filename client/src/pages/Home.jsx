@@ -10,7 +10,7 @@ import { MyContext } from "../LoginContext";
 const Home=()=>{
   const [mydata, setMydata]= useState([]);
   const dispatch= useDispatch();
-  const {logedIn, setUname, setUemail} = useContext(MyContext);
+  const {logedIn, setLogedIn, setUname, setUemail} = useContext(MyContext);
 
 
    const customerAunthenticate=async()=>{
@@ -28,6 +28,8 @@ const Home=()=>{
         localStorage.setItem("username", response.data.name);
         localStorage.setItem("useremail", response.data.email);
         localStorage.setItem("userid", response.data._id);
+        localStorage.setItem("userLogedin", true);
+        setLogedIn(true);
         setUname(localStorage.getItem("username"));
         setUemail(localStorage.getItem("useremail"));
      }

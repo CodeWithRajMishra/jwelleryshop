@@ -67,11 +67,20 @@ const custAuth=async(req, res)=>{
      }
 }
 
-
+const custGetData=async(req, res)=>{
+    const { userid} = req.query;
+    try {
+          const Customer = await CustmoerModel.findById(userid);
+          res.status(200).send(Customer);
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
 module.exports={
     custRegistration,
     custLogin,
-    custAuth
+    custAuth,
+    custGetData
 }
