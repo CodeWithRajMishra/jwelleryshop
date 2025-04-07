@@ -47,6 +47,7 @@ const upload = multer({
 route.post("/adminlogin", AdminController.adminLogin);
 route.post("/addproduct", upload.array('image', 6), AdminController.addProduct);
 route.get("/showproduct", AdminController.showProduct);
+route.get("/getcustomerorder", AdminController.getOrder);
 
 
 module.exports=route;

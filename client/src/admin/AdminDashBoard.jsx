@@ -24,7 +24,8 @@ const AdminDashBoard=()=>{
                 <br /><br />
                 <Button variant="primary">Manage Product</Button>
                 <br /><br />
-                <Button variant="primary">Customer Orders</Button>
+                <Button variant="primary"
+                 onClick={()=>{navigate("customerorder")}}>Customer Orders</Button>
                 </div>
                 <div id="rightdata">
                 

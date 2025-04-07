@@ -9,7 +9,7 @@ import Base_URL from "../config/BaseUrl";
 import { HiDocumentCurrencyRupee } from "react-icons/hi2";
 
 import { useNavigate } from "react-router-dom";
-
+import { cartEmpty } from "../cartSlice";
 
 const CheckOut=()=>{
 const {logedIn} = useContext(MyContext);
@@ -55,14 +55,17 @@ const loadData=async()=>{
     console.log(Product);
    
     let totalAmount=0;
+    let productsName="";
+    let imgURL="";
     const ans=Product.map((key)=>{
         totalAmount+=key.price * key.qnty;
+        productsName+=key.name + ", ";
+        imgURL=`${Base_URL}${key.defaultImage}`;
         return(
             <>
                <tr>
                <td>
-                <img src={`${Base_URL}${key.defaultImage}`} width="80" height="60" />
-                
+                <img src={`${Base_URL}${key.defaultImage}`} width="80" height="60" /> 
                 </td>
                 <td>{key.name}</td>
                 <td>{key.brand}</td>
@@ -84,9 +87,9 @@ const loadData=async()=>{
         key : "rzp_test_pzkHWxo3sRdVQW",
         amount: data.amount,
         currency: data.currency,
-        name: shoe.name,
+        name: productsName,
         description: "Test",
-        image:shoe.img,
+        image:imgURL,
         order_id: data.id,
         handler: async (response) => {
           try {
@@ -110,9 +113,13 @@ const loadData=async()=>{
     const handlePay = async () => {
       try {
         const orderURL = "http://localhost:8000/api/payment/orders";
-        const {data} = await axios.post(orderURL,{amount: totalAmount});
+        const {data} = await axios.post(orderURL,{amount: totalAmount, customername:cusData.name, address:cusData.address, contact:cusData.contact, email:cusData.email, proname:productsName});
         console.log(data);
         initPay(data.data);
+
+        dispatch(cartEmpty());
+
+
       } catch (error) {
         console.log(error);
       }

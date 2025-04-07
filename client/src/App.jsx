@@ -6,6 +6,7 @@ import AddProduct from "./admin/AddProduct";
 import CartData from "./pages/CartData";
 import CheckOut from "./pages/CheckOut";
 import Registration from "./pages/Registration";
+import CustomerOrder from "./admin/CustomerOrder";
 
 const App=()=>{
   return(
@@ -23,6 +24,7 @@ const App=()=>{
         <Routes>
            <Route path="admindashboard" element={<AdminDashBoard/>}>
             <Route path="addproduct" element={<AddProduct/>}/>
+            <Route path="customerorder" element={<CustomerOrder/>}/>
            
            
            </Route>

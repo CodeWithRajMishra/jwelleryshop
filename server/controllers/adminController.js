@@ -1,5 +1,6 @@
 const AdminModel= require("../models/adminModel");
 const ProductModel= require("../models/productModel");
+const OrderModel= require("../models/orderModel");
 
 const adminLogin=async(req, res)=>{
     const { adminid, password} = req.body;
@@ -42,8 +43,14 @@ const showProduct=async(req, res)=>{
       res.status(200).send(Product);
 }
 
+const getOrder=async(req, res)=>{
+    const Order= await OrderModel.find();
+    res.status(200).send(Order);
+}
+
 module.exports={
     adminLogin,
     addProduct,
-    showProduct
+    showProduct,
+    getOrder
 }
